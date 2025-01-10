@@ -10,5 +10,8 @@ export default defineConfig({
     open: 'index.html',
     host: '0.0.0.0',
     port: 5000,
+  },
+  preview: {
+    open: false, // Prevents Vite from opening the browser
   }
 })
