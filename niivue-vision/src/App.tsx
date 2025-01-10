@@ -40,7 +40,9 @@ function App() {
   const [dragState, setDragState] = useState<"contrast" | "measurement" | "none" | "pan" | "slicer3D">("none");
 
   let payload = queryParams['payload'];
-  payload = payload.replace(/^['"]+|['"]+$/g, '');
+  if (payload !== undefined) {
+    payload = payload.replace(/^['"]+|['"]+$/g, '');
+  }
 
   let niiVueContainerProps: NiiVueContainerProps = {
     defaults: niivueDefaults,
@@ -86,7 +88,7 @@ function App() {
   // Only trigger this effect once, via. the crosshairMoved state
   useEffect(() => {
     if (imageLoaded && !crosshairMoved) {
-      const requestedX = queryParams['x'] || queryParams['X']; 
+      const requestedX = queryParams['x'] || queryParams['X'];
       const requestedY = queryParams['y'] || queryParams['Y'];
       const requestedZ = queryParams['z'] || queryParams['Z'];
       console.log('Moving crosshair to: ', requestedX, requestedY, requestedZ);
