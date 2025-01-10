@@ -29,18 +29,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./niivue-vision
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        working-directory: .
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
+      - name: Change Directory
+        run: cd ./niivue-vision
       - name: Install dependencies
         run: npm ci
       - name: Build
