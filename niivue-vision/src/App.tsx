@@ -96,7 +96,7 @@ function App() {
       const requestedX = queryParams['x'] || queryParams['X'];
       const requestedY = queryParams['y'] || queryParams['Y'];
       const requestedZ = queryParams['z'] || queryParams['Z'];
-      console.log('Moving crosshair to: ', requestedX, requestedY, requestedZ);
+      console.log('App: Moving crosshair to: ', requestedX, requestedY, requestedZ);
 
       if (requestedX && parseInt(requestedX) > 0) {
         setX(parseInt(requestedX));
@@ -118,6 +118,10 @@ function App() {
 
   // Update the URL with the current coordinates
   useEffect(() => {
+    if (xCordinate === 1 || yCordinate === 1 || zCordinate === 1) {
+      return;
+    }
+
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.set('X', xCordinate.toString());
     newUrl.searchParams.set('Y', yCordinate.toString());
