@@ -1,7 +1,7 @@
 import { InfoCircleFilled, ReloadOutlined } from '@ant-design/icons';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { Button, Select, Tooltip } from "antd";
-import { Typography, Divider } from 'antd';
+import { Typography } from 'antd';
 const { Paragraph, Text } = Typography;
 
 import { Dispatch, SetStateAction } from 'react';
