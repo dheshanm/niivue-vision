@@ -29,6 +29,7 @@ function App() {
   const [xCordinate, setX] = useState(1);
   const [yCordinate, setY] = useState(1);
   const [zCordinate, setZ] = useState(1);
+  const [tValue, setT] = useState(0);
   const [intensityValue, setIntensity] = useState(0);
 
   const [getMetadataFunction, setGetMetadataFunction] = useState<() => void>(() => () => { });
@@ -51,10 +52,12 @@ function App() {
     xCordinate: xCordinate,
     yCordinate: yCordinate,
     zCordinate: zCordinate,
+    tValue: tValue,
     dragState: dragState,
     setX: setX,
     setY: setY,
     setZ: setZ,
+    setT: setT,
     setI: setIntensity,
     setGetMetadataFunction: setGetMetadataFunction,
     setImageLoaded: setImageLoaded,
@@ -76,10 +79,12 @@ function App() {
     x: xCordinate,
     y: yCordinate,
     z: zCordinate,
+    t: tValue,
     i: intensityValue,
     setX: setX,
     setY: setY,
     setZ: setZ,
+    setT: setT,
     requestMetadata: getMetadataFunction
   };
 

@@ -44,9 +44,11 @@ const Header = (props: HeaderProps) => {
                                         <li>
                                         Press <Text keyboard>c</Text> to cycle through the different clip views.
                                         </li>
+                                        <li>
+                                        Press <Text keyboard> Left Arrow </Text> or <Text keyboard>Right Arrow</Text> to move between different volumes.
+                                        </li>
                                     </ul>
                                 </Paragraph>
-                                <Divider />
                                 <Paragraph>
                                     Mouse Controls
                                     <ul>

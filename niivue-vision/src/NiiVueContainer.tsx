@@ -12,11 +12,13 @@ import { useEffect, useRef, useState } from 'react';
  * @property {number} xCordinate - X coordinate for the crosshair.
  * @property {number} yCordinate - Y coordinate for the crosshair.
  * @property {number} zCordinate - Z coordinate for the crosshair.
+ * @property {number} tValue - T (time) value for the crosshair.
  * @property {'contrast' | 'measurement' | 'none' | 'pan' | 'slicer3D' | 'callbackOnly'} dragState - The current drag state of the canvas.
  * @property {(x: number) => void} setX - Function to set the X coordinate.
  * @property {(y: number) => void} setY - Function to set the Y coordinate.
  * @property {(z: number) => void} setZ - Function to set the Z coordinate.
  * @property {(i: number) => void} setI - Function to set the intensity value.
+ * @property {(t: number) => void} setT - Function to set the T (time) value.
  * @property {(f: () => void) => void} setGetMetadataFunction - Function to set the metadata retrieval function.
  * @property {(b: boolean) => void} setImageLoaded - Function to set the image loaded state.
  * @property {(s: string) => void} setImageName - Function to set the image name.
@@ -30,11 +32,13 @@ export interface NiiVueContainerProps {
     xCordinate: number;
     yCordinate: number;
     zCordinate: number;
+    tValue: number;
     dragState: 'contrast' | 'measurement' | 'none' | 'pan' | 'slicer3D' | 'callbackOnly';
     setX: (x: number) => void;
     setY: (y: number) => void;
     setZ: (z: number) => void;
     setI: (i: number) => void;
+    setT: (t: number) => void;
     setGetMetadataFunction: (f: () => void) => void;
     setImageLoaded: (b: boolean) => void;
     setImageName: (s: string) => void;
@@ -55,6 +59,18 @@ function NiiVueContainer(props: NiiVueContainerProps) {
     const niivueInstanceRef = useRef<Niivue | null>(null);
 
     const [startedLoading, setStartedLoading] = useState(false);
+
+    /**
+     * Focuses the canvas element
+     * 
+     * This function focuses the canvas element by calling the `focus` method on the canvas reference.
+     * This is useful for enabling keyboard shortcuts to interact with the canvas.
+     */
+        const focusCanvas = () => {
+            if (canvasRef.current) {
+                canvasRef.current.focus();
+            }
+        };
 
     /**
      * Asynchronously loads volumes into the Niivue instance.
@@ -79,6 +95,7 @@ function NiiVueContainer(props: NiiVueContainerProps) {
             },
         ]);
         props.setImageLoaded(true);
+        focusCanvas();
     }
 
     /**
@@ -176,6 +193,7 @@ function NiiVueContainer(props: NiiVueContainerProps) {
         });
         // Reset the scene, including the crosshair position, brightness, and contrast
         niivueInstanceRef.current.setDefaults(niiVueDefaults, true);
+        focusCanvas();
     }
 
     // Initialize the Niivue instance
@@ -203,10 +221,14 @@ function NiiVueContainer(props: NiiVueContainerProps) {
                 props.setY(voxData[1]);
                 props.setZ(voxData[2]);
 
-                let intensityValue = strDataSplit[3];
-                intensityValue = intensityValue.replace("=", "").trim().split(" ")[2];
+                let timeIntensityValue = strDataSplit[3];  // 0 = 572
+                timeIntensityValue = timeIntensityValue.split("=");
+                let intensityValue = timeIntensityValue[1].trim();
                 intensityValue = parseInt(intensityValue);
                 props.setI(intensityValue);
+                let timeValue = timeIntensityValue[0].trim();
+                timeValue = parseInt(timeValue);
+                props.setT(timeValue);
             }
 
             niiVueDefaults['onLocationChange'] = handleLocationChange;

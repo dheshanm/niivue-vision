@@ -23,10 +23,12 @@ export interface FooterProps {
     x: number;
     y: number;
     z: number;
+    t: number;
     i: number;
     setX: (x: number) => void;
     setY: (y: number) => void;
     setZ: (z: number) => void;
+    setT: (t: number) => void;
     requestMetadata: () => void;
 }
 
@@ -69,8 +71,11 @@ const Footer = (props: FooterProps) => {
                         <InputNumber suffix="X" value={props.x} onChange={(value) => props.setX(value as number)} changeOnWheel className="w-21 mx-1 h-6" />
                         <InputNumber suffix="Y" value={props.y} onChange={(value) => props.setY(value as number)} changeOnWheel className="w-21 mx-1 h-6" />
                         <InputNumber suffix="Z" value={props.z} onChange={(value) => props.setZ(value as number)} changeOnWheel className="w-21 mx-1 h-6" />
+                        {   props.t > 0 && (
+                            <InputNumber suffix="T" value={props.t} controls={false} readOnly className="w-18 mx-1 h-6" />
+                        )}
                         <Tooltip title="Intensity">
-                            <InputNumber suffix="I" value={props.i} controls={false} readOnly className="w-20 mx-1 h-6" />
+                            <InputNumber suffix="I" value={props.i} controls={false} readOnly className="w-18 mx-1 h-6" />
                         </Tooltip>
                     </th>
                 </tr>
